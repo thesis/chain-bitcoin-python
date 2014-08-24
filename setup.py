@@ -15,6 +15,7 @@ setup(
     ],
     install_requires=[
         'requests>=2',
+        'enum34>=1.0',
     ],
     tests_require=[
     ],
