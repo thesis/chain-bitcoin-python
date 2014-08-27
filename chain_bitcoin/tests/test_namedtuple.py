@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 
 import sure
-from ..exceptions import *
 from ..namedtuple import *
 
 
@@ -29,7 +28,7 @@ def test_from_dict_with_missing_key():
 
 def test_from_dict_with_bad_key():
     Foo = namedtuple('Foo', ('a', 'b'))
-    (lambda: Foo.from_dict({'a': 1, 'b': 2, 'c': 3})).should.throw(ChainError)
+    Foo.from_dict({'a': 1, 'b': 2, 'c': 3}).should.equal(Foo(1, 2))
 
 
 def test_from_dict_with_subclass():

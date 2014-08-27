@@ -2,6 +2,9 @@ from __future__ import absolute_import
 
 __all__ = ('namedtuple', 'namedtuple_to_dict', 'dict_field_map')
 
+import logging
+logger = logging.getLogger('chain_bitcoin')
+
 import collections
 import functools
 import json
@@ -59,11 +62,17 @@ def namedtuple_from_dict(tuple_type, field_map, x):
     if field_map is not None:
         x = dict(filter(None, map(transform_item, x.items())))
 
-    try:
-        return tuple_type(**x)
-    except TypeError:
-        raise ChainError("{name} doesn't fit the data {data}".format(
-            name=tuple_type.__name__, data=json.dumps(x)))
+    # Remove keys that aren't fields, and log a warning.
+    bad_keys = list(k for k in x if k not in tuple_type._fields)
+    if len(bad_keys) != 0:
+        logger.warning('Keys not applicable to {name}: {keys}\n{x}'.format(
+            name=tuple_type.__name__,
+            keys=', '.join(bad_keys),
+            x=str(x),
+        ))
+        x = dict((k, x[k]) for k in x if k not in bad_keys)
+
+    return tuple_type(**x)
 
 
 def dict_field_map(x):
