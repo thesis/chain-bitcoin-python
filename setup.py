@@ -27,6 +27,11 @@ setup(
     name='chain_bitcoin',
     version='0.1',
     packages=['chain_bitcoin'],
+    data_files=[
+        ('.', ['README.rst',
+               'requirements-install.txt',
+               'requirements-test.txt']),
+    ],
     url='https://github.com/cardforcoin/chain-bitcoin-python',
     license='MIT',
     description='Integration library for the Chain.com API',
