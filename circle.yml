@@ -1,0 +1,15 @@
+machine:
+  python:
+    version: 2.7.8
+
+dependencies:
+  pre:
+    - pyenv global 2.6.9
+    - pyenv global 3.3.2
+    - pyenv global 3.4.1
+  override:
+    - pip install tox
+
+test:
+  override:
+    - tox
