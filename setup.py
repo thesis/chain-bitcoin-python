@@ -1,5 +1,6 @@
 from distutils.core import setup
 import os.path
+import re
 
 dirname = os.path.dirname(__file__)
 
@@ -12,6 +13,16 @@ def read_lines(path):
     with open(resolve_path(path)) as f:
         return f.readlines()
 
+
+def read(path):
+    with open(resolve_path(path)) as f:
+        return f.read()
+
+
+def long_description():
+    return re.split('\n\.\. pypi [^\n]*\n', read('README.rst'), 1)[1]
+
+
 setup(
     name='chain_bitcoin',
     version='0.1',
@@ -19,6 +30,7 @@ setup(
     url='https://github.com/cardforcoin/chain-bitcoin-python',
     license='MIT',
     description='Integration library for the Chain.com API',
+    long_description=long_description(),
     classifiers=[
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
