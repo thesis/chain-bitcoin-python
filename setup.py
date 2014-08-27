@@ -1,4 +1,16 @@
 from distutils.core import setup
+import os.path
+
+dirname = os.path.dirname(__file__)
+
+
+def resolve_path(path):
+    return os.path.join(dirname, path)
+
+
+def read_lines(path):
+    with open(resolve_path(path)) as f:
+        return f.readlines()
 
 setup(
     name='chain_bitcoin',
@@ -13,10 +25,6 @@ setup(
         'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
-    install_requires=[
-        'requests>=2',
-        'enum34>=1.0',
-    ],
-    tests_require=[
-    ],
+    install_requires=read_lines('requirements-install.txt'),
+    tests_require=read_lines('requirements-test.txt'),
 )
