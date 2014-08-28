@@ -40,7 +40,9 @@ def namedtuple(name, args=None, alter_dict=None):
         ``args`` must be a list of strings.
     """
 
-    tuple_type = collections.namedtuple(name, list(args or []))
+    args = list(args or [])
+
+    tuple_type = collections.namedtuple(name, args)
 
     set_function_defaults(tuple_type.__new__, [None] * len(args))
 
