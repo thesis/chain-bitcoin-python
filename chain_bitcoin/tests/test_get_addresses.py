@@ -6,22 +6,22 @@ from .mock_http_adapter import *
 
 
 def test_get_addresses():
-    get_addresses(address_hashes, api_key_id='DEMO-4a5e1e4',
+    get_addresses(address_ids, api_key_id='DEMO-4a5e1e4',
                   http_adapter=http_adapter) \
         .should.equal(addresses)
 
 
 def test_get_addresses_using_class():
     Chain(api_key_id=api_key_id, http_adapter=http_adapter) \
-        .get_addresses(address_hashes).should.equal(addresses)
+        .get_addresses(address_ids).should.equal(addresses)
 
 
 def test_get_addresses_without_api_key_id():
-    (lambda: get_addresses(address_hashes, http_adapter=no_http())) \
+    (lambda: get_addresses(address_ids, http_adapter=no_http())) \
         .should.throw(NoApiKeyId)
 
 
-address_hashes = ['17x23dNjXJLzGMev6R63uyRhMWP1VHawKc',
+address_ids = ['17x23dNjXJLzGMev6R63uyRhMWP1VHawKc',
                   '3WWTV4tw5etd54erhv348ncERVInmervnu']
 
 api_key_id = 'DEMO-4a5e1e4'

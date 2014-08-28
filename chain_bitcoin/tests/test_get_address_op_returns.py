@@ -6,22 +6,22 @@ from .mock_http_adapter import *
 
 
 def test_get_address_op_returns():
-    get_address_op_returns(address_hash, api_key_id=api_key_id,
+    get_address_op_returns(address_id, api_key_id=api_key_id,
                            http_adapter=http_adapter) \
         .should.equal(op_returns)
 
 
 def test_get_address_op_returns_using_class():
     Chain(api_key_id=api_key_id, http_adapter=http_adapter) \
-        .get_address_op_returns(address_hash).should.equal(op_returns)
+        .get_address_op_returns(address_id).should.equal(op_returns)
 
 
 def test_get_address_op_returns_without_api_key_id():
-    (lambda: get_address_op_returns(address_hash, http_adapter=no_http())) \
+    (lambda: get_address_op_returns(address_id, http_adapter=no_http())) \
         .should.throw(NoApiKeyId)
 
 
-address_hash = '1Bj5UVzWQ84iBCUiy5eQ1NEfWfJ4a3yKG1'
+address_id = '1Bj5UVzWQ84iBCUiy5eQ1NEfWfJ4a3yKG1'
 
 api_key_id = 'DEMO-4a5e1e4'
 

@@ -6,24 +6,24 @@ from .mock_http_adapter import *
 
 
 def test_get_address_transactions():
-    get_address_transactions(address_hash, limit=2, api_key_id=api_key_id,
+    get_address_transactions(address_id, limit=2, api_key_id=api_key_id,
                              http_adapter=http_adapter) \
         .should.equal(transactions)
 
 
 def test_get_address_transactions_using_class():
     Chain(api_key_id=api_key_id, http_adapter=http_adapter) \
-        .get_address_transactions(address_hash, limit=2) \
+        .get_address_transactions(address_id, limit=2) \
         .should.equal(transactions)
 
 
 def test_get_address_transactions_without_api_key_id():
-    (lambda: get_address_transactions(address_hash, limit=2,
+    (lambda: get_address_transactions(address_id, limit=2,
                                       http_adapter=no_http())) \
         .should.throw(NoApiKeyId)
 
 
-address_hash = '1K4nPxBMy6sv7jssTvDLJWk1ADHBZEoUVb'
+address_id = '1K4nPxBMy6sv7jssTvDLJWk1ADHBZEoUVb'
 
 api_key_id = 'DEMO-4a5e1e4'
 
