@@ -23,3 +23,15 @@ def argspec_drop_right(n, argspec):
 
 def argspec_append_left(new_args, argspec):
     return argspec._replace(args=(new_args + argspec.args))
+
+
+def compose(*fs):
+    """
+    compose(a, b, c)(x) = a(b(c(x)))
+    """
+    def g(x):
+        for f in reversed(fs):
+            x = f(x)
+        return x
+
+    return g
