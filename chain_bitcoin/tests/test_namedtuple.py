@@ -37,22 +37,13 @@ def test_from_dict_with_subclass():
     Foo.from_dict({'a': 1, 'b': 2}).should.equal(Foo(1, 2))
 
 
-def test_dict_field_map():
-    field_map = dict_field_map({'b': lambda x: x + 1})
-    Foo = namedtuple('Foo', ('a', 'b'), field_map=field_map)
+def test_transform_item():
+    alter_dict = transform_item('b', lambda x: x + 1)
+    Foo = namedtuple('Foo', ('a', 'b'), alter_dict=alter_dict)
     Foo.from_dict({'a': 1, 'b': 2}).should.equal(Foo(1, 3))
 
 
-def test_key_transforming_field_map():
-    def field_map(k, v):
-        return (k[0], v)
-    Foo = namedtuple('Foo', ('a', 'b'), field_map=field_map)
-    Foo.from_dict({'apple': 1, 'banana': 2}).should.equal(Foo(1, 2))
-
-
-def test_filtering_field_map():
-    def field_map(k, v):
-        if k in ('a', 'b'):
-            return (k, v)
-    Foo = namedtuple('Foo', ('a', 'b'), field_map=field_map)
-    Foo.from_dict({'a': 1, 'b': 2, 'c': 3}).should.equal(Foo(1, 2))
+def test_remove_item():
+    alter_dict = remove_item('b')
+    Foo = namedtuple('Foo', ('a', 'b'), alter_dict=alter_dict)
+    Foo.from_dict({'a': 1, 'b': 2}).should.equal(Foo(1, None))

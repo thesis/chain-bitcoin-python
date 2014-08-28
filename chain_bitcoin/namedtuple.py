@@ -1,6 +1,8 @@
 from __future__ import absolute_import
 
-__all__ = ('namedtuple', 'namedtuple_to_dict', 'dict_field_map')
+__all__ = (
+    'namedtuple', 'namedtuple_to_dict', 'transform_item', 'remove_item'
+)
 
 import logging
 logger = logging.getLogger('chain_bitcoin')
@@ -14,7 +16,7 @@ from .exceptions import *
 from .func_util import set_function_defaults
 
 
-def namedtuple(name, args=None, field_map=None):
+def namedtuple(name, args=None, alter_dict=None):
     """
     A class constructor similar to ``collections.namedtuple``.
 
@@ -22,7 +24,7 @@ def namedtuple(name, args=None, field_map=None):
 
         args: list of strings
 
-        field_map: (string, a) -> Maybe (string, b)
+        alter_dict: map from dict to dict
         Modifies the behavior of ``from_dict``.
 
     Differences from ``collections.namedtuple``:
@@ -45,22 +47,13 @@ def namedtuple(name, args=None, field_map=None):
     tuple_type.replace = tuple_type._replace
 
     def from_dict(cls, x):
-        return namedtuple_from_dict(cls, field_map, x)
+        return namedtuple_from_dict(cls, alter_dict(x) if alter_dict else x)
     tuple_type.from_dict = classmethod(from_dict)
 
     return tuple_type
 
 
-def namedtuple_from_dict(tuple_type, field_map, x):
-
-    from . import models
-
-    def transform_item(item):
-        (k, v) = item
-        return field_map(k, v)
-
-    if field_map is not None:
-        x = dict(filter(None, map(transform_item, x.items())))
+def namedtuple_from_dict(tuple_type, x):
 
     # Remove keys that aren't fields, and log a warning.
     bad_keys = list(k for k in x if k not in tuple_type._fields)
@@ -75,10 +68,22 @@ def namedtuple_from_dict(tuple_type, field_map, x):
     return tuple_type(**x)
 
 
-def dict_field_map(x):
-    def f(k, v):
-        return (k, x[k](v)) if k in x else (k, v)
-    return f
+def transform_item(k, f):
+    def t(x):
+        x = dict(x)
+        if k in x:
+            x[k] = f(x[k])
+        return x
+    return t
+
+
+def remove_item(k):
+    def t(x):
+        if k in x:
+            x = dict(x)
+            del x[k]
+        return x
+    return t
 
 
 def namedtuple_to_dict(tup):
