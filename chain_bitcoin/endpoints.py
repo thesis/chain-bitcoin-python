@@ -243,7 +243,8 @@ def get_transaction_op_return(transaction_hash, config=default_config, **kw):
     config = config.replace(**kw)
     require_api_key_id(config)
     requests = config_to_requests(config)
-    url = make_url(['v1', 'transactions', transaction_hash, 'op-return'])
+    url = make_url(['v1', config.block_chain, 'transactions', transaction_hash,
+                    'op-return'])
     response_data = parse_response_data(requests.get(url))
     return OpReturn.from_dict(response_data)
 
