@@ -7,8 +7,8 @@ from .exceptions import *
 
 def map_list(f, xs):
     """
-    Use `f` to transform each element of `xs` if `xs` is a list.
-    Raise `ChainError` if `xs` is not a list.
+    Use ``f`` to transform each element of ``xs`` if ``xs`` is a list.
+    Raise ``ChainError`` if ``xs`` is not a list.
     """
     if not isinstance(xs, list):
         raise ChainError('Expected list, got "{0}"'.format(xs))
