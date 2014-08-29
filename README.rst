@@ -105,3 +105,27 @@ Webhook-parsing example
     import json
 
     message = WebhookEvent.Message.from_dict(json.loads(request.body))
+
+Changes
+-------
+
+
+0.4__
+~~~~~
+__ https://github.com/cardforcoin/chain-bitcoin-python/milestones/0.4
+
+Type of time attributes: string -> ``datetime`` `(#2)
+<https://github.com/cardforcoin/chain-bitcoin-python/issues/2>`_
+
+Type of bitcoin amount attributes: ``int`` -> ``Btc`` `(#3)
+<https://github.com/cardforcoin/chain-bitcoin-python/issues/3>`_
+
+0.3
+~~~
+
+Initial release
+
+< 0.3
+~~~~~
+
+Defunct
