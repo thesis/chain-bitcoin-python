@@ -1,23 +1,11 @@
 from setuptools import setup
-import os.path
+import pkg_resources
 import re
-
-dirname = os.path.dirname(__file__)
-
-
-def resolve_path(path):
-    return os.path.join(dirname, path)
-
-
-def read_lines(path):
-    with open(resolve_path(path)) as f:
-        return f.readlines()
 
 
 def read(path):
-    with open(resolve_path(path)) as f:
+    with open(pkg_resources.resource_filename(__name__, path)) as f:
         return f.read()
-
 
 def long_description():
     return re.split('\n\.\. pypi [^\n]*\n', read('README.rst'), 1)[1]
@@ -29,6 +17,8 @@ setup(
     author='Chris Martin',
     author_email='ch.martin@gmail.com',
     packages=['chain_bitcoin'],
+    package_data={'chain_bitcoin': ['chain.pem']},
+    include_package_data=True,
     url='https://github.com/cardforcoin/chain-bitcoin-python',
     license='MIT',
     description='Integration library for the Chain.com API',
@@ -43,6 +33,6 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
     ],
-    install_requires=read_lines('requirements-install.txt'),
-    tests_require=read_lines('requirements-test.txt'),
+    install_requires=read('requirements-install.txt').split('\n'),
+    tests_require=read('requirements-test.txt').split('\n'),
 )

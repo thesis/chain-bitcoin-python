@@ -3,7 +3,7 @@ from __future__ import absolute_import
 __all__ = ('Config', 'ca_cert', 'default_block_chain', 'default_config',
            'config_to_requests', 'require_api_key_id', 'require_api_key_secret')
 
-import os
+import pkg_resources
 import requests
 import requests.auth
 
@@ -37,7 +37,7 @@ class Config(namedtuple('Config', (
     """
 
 
-ca_cert = os.path.join(os.path.dirname(__file__), 'chain.pem')
+ca_cert = pkg_resources.resource_filename(__name__, 'chain.pem')
 
 default_block_chain = 'bitcoin'
 
