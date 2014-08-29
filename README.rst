@@ -112,7 +112,7 @@ Changes
 
 0.4__
 ~~~~~
-__ https://github.com/cardforcoin/chain-bitcoin-python/milestones/0.4
+__ https://github.com/cardforcoin/chain-bitcoin-python/issues?q=milestone:0.4
 
 Type of time attributes: string -> ``datetime`` `(#2)
 <https://github.com/cardforcoin/chain-bitcoin-python/issues/2>`_
