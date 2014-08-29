@@ -1,21 +1,22 @@
 from setuptools import setup
-import os.path
+import pkg_resources
 import re
 
-dirname = os.path.dirname(__file__)
+name = 'chain_bitcoin'
 
 
-def resolve_path(path):
-    return os.path.join(dirname, path)
+def open_resource(r):
+    return open(pkg_resources.resource_filename(
+        pkg_resources.Requirement.parse(name), r))
 
 
-def read_lines(path):
-    with open(resolve_path(path)) as f:
+def read_lines(r):
+    with open_resource(r) as f:
         return f.readlines()
 
 
-def read(path):
-    with open(resolve_path(path)) as f:
+def read(r):
+    with open_resource(r) as f:
         return f.read()
 
 
@@ -24,16 +25,11 @@ def long_description():
 
 
 setup(
-    name='chain_bitcoin',
+    name=name,
     version='0.1',
     author='Chris Martin',
     author_email='ch.martin@gmail.com',
     packages=['chain_bitcoin'],
-    data_files=[
-        ('.', ['README.rst',
-               'requirements-install.txt',
-               'requirements-test.txt']),
-    ],
     url='https://github.com/cardforcoin/chain-bitcoin-python',
     license='MIT',
     description='Integration library for the Chain.com API',
