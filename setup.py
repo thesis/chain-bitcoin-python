@@ -1,22 +1,21 @@
 from setuptools import setup
-import pkg_resources
+import os.path
 import re
 
-name = 'chain_bitcoin'
+dirname = os.path.dirname(__file__)
 
 
-def open_resource(r):
-    return open(pkg_resources.resource_filename(
-        pkg_resources.Requirement.parse(name), r))
+def resolve_path(path):
+    return os.path.join(dirname, path)
 
 
-def read_lines(r):
-    with open_resource(r) as f:
+def read_lines(path):
+    with open(resolve_path(path)) as f:
         return f.readlines()
 
 
-def read(r):
-    with open_resource(r) as f:
+def read(path):
+    with open(resolve_path(path)) as f:
         return f.read()
 
 
@@ -25,7 +24,7 @@ def long_description():
 
 
 setup(
-    name=name,
+    name='chain_bitcoin',
     version='0.1',
     author='Chris Martin',
     author_email='ch.martin@gmail.com',
