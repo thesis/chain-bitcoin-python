@@ -25,7 +25,7 @@ def long_description():
 
 setup(
     name='chain_bitcoin',
-    version='0.1',
+    version='0.2',
     author='Chris Martin',
     author_email='ch.martin@gmail.com',
     packages=['chain_bitcoin'],
