@@ -2,15 +2,15 @@ from __future__ import absolute_import
 
 import json
 import sure
-from .. import AddressTransactionEvent, Transaction
+from .. import WebhookEvent, AddressTransactionEvent, Transaction
 
 
 def test_address_transaction_callback():
-    AddressTransactionEvent.Message.from_dict(json.loads(callback_data)) \
+    WebhookEvent.Message.from_dict(json.loads(request_body)) \
         .should.equal(message)
 
 
-callback_data = """
+request_body = """
 {
   "transaction": {
     "confirmations": 0,

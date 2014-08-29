@@ -2,7 +2,8 @@ from __future__ import absolute_import
 
 __all__ = (
     'Address', 'Transaction', 'Output', 'OpReturn', 'Block', 'Webhook',
-    'WebhookEvent', 'AddressTransactionEvent', 'SendTransactionResult'
+    'WebhookEvent', 'EchoVerificationEvent', 'AddressTransactionEvent',
+    'SendTransactionResult'
 )
 
 from enum import Enum
@@ -133,12 +134,19 @@ class WebhookEvent:
     The event that will trigger the Webhook's POST request.
     """
 
-    Message = None
-    """
-    https://chain.com/docs/v1/curl/#webhooks-receiving
+    class Message(object):
+        """
+        https://chain.com/docs/v1/curl/#webhooks-receiving
 
-    The class for data sent to the webhook URL.
-    """
+        The class for data sent to the webhook URL.
+        """
+
+        @classmethod
+        def from_dict(cls, x):
+            x = dict(x)
+            event_type = next(t for t in webhook_event_types
+                              if t.event == x['event'])
+            return event_type.Message.from_dict(x)
 
     @classmethod
     def from_dict(cls, x):
@@ -148,7 +156,32 @@ class WebhookEvent:
         return event_type.from_dict(x)
 
 
+echo_verification_event = 'echo-verification'
+
 address_transaction_event = 'address-transaction'
+
+
+class EchoVerificationEvent(
+    namedtuple('EchoVerificationEvent', alter_dict=remove_item('event'))
+):
+    """
+    https://chain.com/docs/v1/curl/#webhooks-setup
+
+    Each time you create a new Webhook, before completing the request, the
+    Chain API will make a test request to the Webhook in order to verify
+    ownership.
+
+    To pass the verification test, your web server must respond with an exact
+    copy of the request body.
+    """
+
+    event = echo_verification_event
+
+    class Message(namedtuple(
+        'EchoVerificationEvent_Message',
+        alter_dict=remove_item('event')
+    )):
+        pass
 
 
 class AddressTransactionEvent(
@@ -200,5 +233,6 @@ class AddressTransactionEvent(
 
 
 webhook_event_types = (
+    EchoVerificationEvent,
     AddressTransactionEvent,
 )
