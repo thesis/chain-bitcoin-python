@@ -4,3 +4,4 @@
 /.tox
 /.coverage
 /dist
+/chain_bitcoin.egg-info
