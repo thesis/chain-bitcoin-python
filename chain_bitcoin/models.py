@@ -26,7 +26,8 @@ class Address(namedtuple('Address', (
 
 class Transaction(namedtuple('Transaction', (
     'hash', 'block_hash', 'block_height', 'block_time', 'inputs', 'outputs',
-    'amount', 'fees', 'confirmations'
+    'amount', 'fees', 'confirmations', 'chain_received_at', 'propagation_level',
+    'double_spend'
 ), alter_dict=compose(
     transform_item(
         'inputs', lambda v: map_list(Transaction.Input.from_dict, v)),
@@ -42,7 +43,7 @@ class Transaction(namedtuple('Transaction', (
 
     class Input(namedtuple('Transaction_Input', (
         'transaction_hash', 'output_hash', 'output_index', 'value', 'addresses',
-        'script_signature'
+        'script_signature', 'coinbase'
     ))):
         """
         https://chain.com/docs/v1/curl/#object-bitcoin-transaction
