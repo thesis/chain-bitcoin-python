@@ -6,8 +6,6 @@ __all__ = (
     'SendTransactionResult'
 )
 
-from enum import Enum
-
 from .func_util import compose
 from .map_list import *
 from .namedtuple import *
