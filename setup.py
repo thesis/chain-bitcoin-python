@@ -26,6 +26,8 @@ def long_description():
 setup(
     name='chain_bitcoin',
     version='0.1',
+    author='Chris Martin',
+    author_email='ch.martin@gmail.com',
     packages=['chain_bitcoin'],
     data_files=[
         ('.', ['README.rst',
