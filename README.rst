@@ -3,6 +3,8 @@ chain-bitcoin-python
 
 Integration library for the Chain.com API.
 
+https://pypi.python.org/pypi/chain_bitcoin/
+
 .. pypi - Everything below this line goes into the description for PyPI.
 
 
