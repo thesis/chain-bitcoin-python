@@ -1,57 +1,34 @@
-chain-bitcoin-python
-====================
+import ast
+import inspect
+import pexpect.replwrap
+import re
+import textwrap
 
-Integration library for the Chain.com API.
 
-.. pypi - Everything below this line goes into the description for PyPI.
-
-
-Setup
------
-
-Either import ``chain_bitcoin``
-
-.. code:: python
-
-    import chain_bitcoin
-
-    address_info = chain_bitcoin.get_address(
-        some_address_hash, api_key_id=some_api_key_id)
-
-or configure a ``Chain`` object
-
-.. code:: python
+def test():
 
     from chain_bitcoin import Chain
 
-    chain = Chain(api_key_id=some_api_key_id)
-    address_info = chain.get_address(some_address_hash)
-
-Function examples
------------------
-
-.. code:: python
-
-    from chain_bitcoin import Chain
-
-    chain = Chain(api_key_id='...', api_key_secret='...')
+    chain = Chain(
+        api_key_id='',
+        api_key_secret='')
 
     chain.get_address('17x23dNjXJLzGMev6R63uyRhMWP1VHawKc')
 
     chain.get_addresses(['1K4nPxBMy6sv7jssTvDLJWk1ADHBZEoUVb',
                          '1EX1E9n3bPA1zGKDV5iHY2MnM7n5tDfnfH'])
 
-    chain.get_address_transactions('17x23dNjXJLzGMev6R63uyRhMWP1VHawKc')
+    chain.get_address_transactions('17x23dNjXJLzGMev6R63uyRhMWP1VHawKc')[:2]
 
     chain.get_addresses_transactions(['1K4nPxBMy6sv7jssTvDLJWk1ADHBZEoUVb',
-                                      '1EX1E9n3bPA1zGKDV5iHY2MnM7n5tDfnfH'])
+                                      '1EX1E9n3bPA1zGKDV5iHY2MnM7n5tDfnfH'])[:2]
 
     chain.get_address_unspents('17x23dNjXJLzGMev6R63uyRhMWP1VHawKc')
 
     chain.get_addresses_unspents(['1K4nPxBMy6sv7jssTvDLJWk1ADHBZEoUVb',
-                                  '1EX1E9n3bPA1zGKDV5iHY2MnM7n5tDfnfH'])
+                                  '1EX1E9n3bPA1zGKDV5iHY2MnM7n5tDfnfH'])[:2]
 
-    chain.get_address_op_returns('1Bj5UVzWQ84iBCUiy5eQ1NEfWfJ4a3yKG1')
+    chain.get_address_op_returns('1Bj5UVzWQ84iBCUiy5eQ1NEfWfJ4a3yKG1')[:2]
 
     chain.get_transaction(
         '0f40015ddbb8a05e26bbacfb70b6074daa1990b813ba9bc70b7ac5b0b6ee2c45')
@@ -94,12 +71,28 @@ Function examples
 
     chain.delete_webhook('test_webhook')
 
-Webhook-parsing example
------------------------
 
-.. code:: python
+def commands(f):
+    lines, _ = inspect.getsourcelines(f)
+    lines = lines[1:]
+    source = textwrap.dedent(''.join(lines))
+    lines = source.split('\n')
+    nodes = list(ast.iter_child_nodes(ast.parse(source)))
+    line_starts = [node.lineno - 1 for node in nodes]
+    line_ranges = zip(line_starts, line_starts[1:] + [len(lines)])
+    return ('\n'.join(lines[a:b]).strip() for (a, b) in line_ranges)
 
-    from chain_bitcoin import WebhookEvent
-    import json
 
-    message = WebhookEvent.Message.from_dict(json.loads(request.body))
+def repl_commands(commands):
+    repl = pexpect.replwrap.python()
+    for command in commands:
+        print('>>> {}\n'.format(re.sub('\n', '\n... ', command)))
+        print(repl.run_command(command))
+
+
+def main():
+    repl_commands(commands(test))
+
+
+if __name__ == '__main__':
+    main()
