@@ -7,6 +7,7 @@ def read(path):
     with open(pkg_resources.resource_filename(__name__, path)) as f:
         return f.read()
 
+
 def long_description():
     return re.split('\n\.\. pypi [^\n]*\n', read('README.rst'), 1)[1]
 
