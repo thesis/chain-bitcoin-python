@@ -1,7 +1,8 @@
 from __future__ import absolute_import
 
 __all__ = (
-    'set_function_defaults', 'argspec_drop_right', 'argspec_append_left'
+    'set_function_defaults', 'argspec_drop_right', 'argspec_append_left',
+    'if_not_none'
 )
 
 from inspect import ArgSpec
@@ -35,3 +36,7 @@ def compose(*fs):
         return x
 
     return g
+
+
+def if_not_none(f):
+    return lambda x: None if x is None else f(x)

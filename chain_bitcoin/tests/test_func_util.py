@@ -35,3 +35,10 @@ def test_argspec_append_left():
 
     argspec_append_left(['x', 'y'], inspect.getargspec(f)) \
         .should.equal(inspect.getargspec(g))
+
+
+def test_if_not_none():
+    f = if_not_none(lambda x: x * 2 + 1)
+    f(7).should.equal(15)
+    f(0).should.equal(1)
+    f(None).should.equal(None)
