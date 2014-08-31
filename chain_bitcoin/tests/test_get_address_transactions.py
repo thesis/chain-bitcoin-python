@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+from datetime import datetime
+from dateutil.tz import tzoffset
 import sure
 from .. import Chain, NoApiKeyId, Transaction, get_address_transactions
 from .mock_http_adapter import *
@@ -136,7 +138,7 @@ transactions = [
         hash='0bf0de38c26195919179f42d475beb7a6b15258c38b57236afdd60a07eddd2cc',
         block_hash='00000000000000001ea5471a4edc67380f114c6cad06bfd59ac6508f90e8b252',
         block_height=303404,
-        block_time='2014-05-30T23:54:55Z',
+        block_time=datetime(2014, 5, 30, 23, 54, 55, tzinfo=tzoffset(None, 0)),
         confirmations=8758,
         inputs=[
             Transaction.Input(
@@ -168,7 +170,7 @@ transactions = [
         hash='b84a66c46e24fe71f9d8ab29b06df932d77bec2cc0691799fae398a8dc9069bf',
         block_hash='0000000000000000577344f05b6ea721b95fa629e0c3b16cdd929cbdf20f862f',
         block_height=303402,
-        block_time='2014-05-30T23:38:24Z',
+        block_time=datetime(2014, 5, 30, 23, 38, 24, tzinfo=tzoffset(None, 0)),
         confirmations=8760,
         inputs=[
             Transaction.Input(

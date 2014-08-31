@@ -6,7 +6,9 @@ __all__ = (
     'SendTransactionResult'
 )
 
-from .func_util import compose
+import dateutil.parser
+
+from .func_util import compose, if_not_none
 from .map_list import *
 from .namedtuple import *
 
@@ -31,6 +33,7 @@ class Transaction(namedtuple('Transaction', (
         'inputs', lambda v: map_list(Transaction.Input.from_dict, v)),
     transform_item(
         'outputs', lambda v: map_list(Transaction.Output.from_dict, v)),
+    transform_item('block_time', if_not_none(dateutil.parser.parse)),
 ))):
     """
     https://chain.com/docs/v1/curl/#object-bitcoin-transaction
@@ -102,7 +105,7 @@ class OpReturn(namedtuple('OpReturn', (
 class Block(namedtuple('Block', (
     'hash', 'previous_block_hash', 'height', 'confirmations', 'merkle_root',
     'time', 'nonce', 'difficulty', 'transaction_hashes'
-))):
+), alter_dict=transform_item('time', if_not_none(dateutil.parser.parse)))):
     """
     https://chain.com/docs/v1/curl/#object-bitcoin-block
 

@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+from datetime import datetime
+from dateutil.tz import tzoffset
 import sure
 from .. import Chain, NoApiKeyId, Block, get_block_by_height
 from .mock_http_adapter import *
@@ -52,7 +54,7 @@ block = Block(
     height=293268,
     confirmations=13470,
     merkle_root='942ed435c0a43b0113fcba86c75a22b5430977b8403eb5a405a86c8e17f67f0e',
-    time='2014-03-30T18:40:51Z',
+    time=datetime(2014, 3, 30, 18, 40, 51, tzinfo=tzoffset(None, 0)),
     nonce=793426357,
     difficulty=5006860589.2054,
     transaction_hashes=[
