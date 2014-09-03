@@ -5,6 +5,9 @@ Integration library for the Chain.com API.
 
 https://pypi.python.org/pypi/chain_bitcoin/
 
+.. image:: https://circleci.com/gh/cardforcoin/chain-bitcoin-python.png?style=badge
+    :target: https://circleci.com/gh/cardforcoin/chain-bitcoin-python
+
 .. pypi - Everything below this line goes into the description for PyPI.
 
 
