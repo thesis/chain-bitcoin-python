@@ -117,7 +117,7 @@ Changes
 ~~~~~
 __ https://github.com/cardforcoin/chain-bitcoin-python/issues?q=milestone:0.4
 
-Time attributes are now ``datetime``s, not strings. `(#2)
+Time attributes are now ``datetime``, not string. `(#2)
 <https://github.com/cardforcoin/chain-bitcoin-python/issues/2>`_
 
 ``enum34`` dependency is removed. `(#1)
